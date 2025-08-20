@@ -1,0 +1,79 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    background-image: url(./pink-7761356_1280.png) ;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: blueviolet;
+}
+body>section{
+    width: 60%;
+    height: 70%;
+    border: 1px solid blueviolet;
+    display: flex;
+    border-radius: 10px;
+
+}
+body>section>aside{
+    width: 35%;
+    height: 100%;
+    background-color: blueviolet;
+    border-radius: 10px 0px 0px 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+aside>h1{
+    font-size: 40px;
+    font-weight: 200;
+}
+body>section>form{
+    width: 65%;
+    height: 100%;
+    backdrop-filter: blur;
+    border-radius: 0px 10px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+}
+form>input{
+    width: 70%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    padding-left: 30px;
+
+}
+button{
+    width: 25%;
+    height: 40px;
+    border: none;
+    background-color: blueviolet;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: all 300ms;
+}
+button:hover{
+    background-color: transparent;
+    border: 1px solid blueviolet;
+    color: blueviolet;
+}
+a{
+    text-decoration: none;
+    color: blueviolet;
+    font-size: 20px;
+    font-weight: 600;
+}
