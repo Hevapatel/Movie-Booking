@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3idiots</title>
+    <link rel="stylesheet" href="3idiots.css">
+</head>
+<link  rel="stylesheet"  data-purpose="Layout StyleSheet"  title="Web Awesome"  href="/css/app-wa-d53d10572a0e0d37cb8d614a3f177a0c.css?vsn=d">
+<link  rel="stylesheet"  href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+<link  rel="stylesheet"  href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-thin.css">
+<link  rel="stylesheet"  href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-solid.css">
+<link  rel="stylesheet"  href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-regular.css">
+<link  rel="stylesheet"  href="https://site-assets.fontawesome.com/releases/v6.5.2/css/sharp-light.css">
+<body>
+    <header>
+      <nav>
+        <h1>BookMyMovie</h1>
+        <i class="fa-duotone fa-user" id="profile-icon"></i>
+        <section id="profile-block">
+          <p id="close">X</p>
+          <div id="uname"></div>
+          <div>
+            <button id="lbtn">Logout</button>
+          </div>
+        </section>
+      </nav>
+      <h4>Your one-stop solution for booking movie tickets</h4>
+    </header>
+
+      <div class="search-bar">
+        <input type="search" placeholder="Search Movies" required id="searched_movie" value=""> 
+        <button id="search"><i class="fa-duotone fa-solid fa-magnifying-glass"></i></button>
+        <button id="filters" class="filters"><i class="fa-duotone fa-regular fa-filter-list"></i><span>Filters</span></button>
+      </div>
+      <div id="filterPopup" class="filter-popup">
+        <label>Language</label>
+        <select id="languageFilter">
+          <option value="">All</option>
+          <option value="English">English</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Gujarati">Gujarati</option>
+          <option value="Tamil">Tamil</option>
+        </select>
+
+        <label>Genre</label>
+        <select id="genreFilter">
+          <option value="">All</option>
+          <option value="Action">Action</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Drama">Drama</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+        </select>
+
+        <label>Max Price (₹)</label>
+        <input type="number" id="maxPriceFilter" placeholder="e.g. 250" />
+
+        <button id="applyFiltersBtn">Apply</button>
+        <button id="clearFiltersBtn" type="button">Clear</button>
+        <button id="closeFiltersBtn" type="button">Close</button>
+      </div>
+    <section>
+            <div class="movie-poster">
+            <img src="3idiots.png" alt="3 Idiots Poster" style="width: 200px; height: 300px;">
+            <h1>3 Idiots</h1>
+            <h3>Genre: Comedy, Drama</h3>
+            </div>
+         
+
+    </section>
+    <script src="3idiots.js"></script>
+</body>
+</html>

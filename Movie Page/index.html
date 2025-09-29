@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seating2</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h1 class="title">Book Tickets</h1>
+            <p class="subtitle">Pick your date, theatre and slot, then choose seats.</p>
+
+            <div class="input-group">
+                <label for="date">Date</label>
+                <div class="input-with-icon">
+                    <input type="text" id="date" value="27-09-2025">
+                    <i class="fa-solid fa-calendar-days icon"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="theatre">Theatre</label>
+                <div class="custom-select">
+                    <select id="theatre">
+                        <option value="pvr-central-mall">PVR Central Mall</option>
+                        <option value="cinepolis">Cinepolis</option>
+                        <option value="inox">Inox</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down select-arrow"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Slot</label>
+                <div class="slot-grid">
+                    <button class="slot-button active">10:00 AM</button>
+                    <button class="slot-button">01:30 PM</button>
+                    <button class="slot-button">05:15 PM</button>
+                    <button class="slot-button">08:45 PM</button>
+                    <button class="slot-button">11:30 PM</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="legend">
+                <div class="legend-item"><span class="legend-color selected"></span> Selected</div>
+                <div class="legend-item"><span class="legend-color available"></span> Available</div>
+                <div class="legend-item"><span class="legend-color booked"></span> Booked</div>
+            </div>
+
+            <div class="seat-grid">
+                <button class="seat available" data-seat="A1">A1</button>
+                <button class="seat available" data-seat="A2">A2</button>
+                <button class="seat booked" data-seat="A3">A3</button>
+                <button class="seat available" data-seat="A4">A4</button>
+                <button class="seat available" data-seat="A5">A5</button>
+                <button class="seat booked" data-seat="A6">A6</button>
+                <button class="seat available" data-seat="A7">A7</button>
+                <button class="seat available" data-seat="A8">A8</button>
+                <button class="seat booked" data-seat="A9">A9</button>
+                <button class="seat available" data-seat="A10">A10</button>
+                <button class="seat available" data-seat="A11">A11</button>
+                <button class="seat booked" data-seat="A12">A12</button>
+
+                <button class="seat available" data-seat="B1">B1</button>
+                <button class="seat available" data-seat="B2">B2</button>
+                <button class="seat booked" data-seat="B3">B3</button>
+                <button class="seat available" data-seat="B4">B4</button>
+                <button class="seat available" data-seat="B5">B5</button>
+                <button class="seat booked" data-seat="B6">B6</button>
+                <button class="seat available" data-seat="B7">B7</button>
+                <button class="seat available" data-seat="B8">B8</button>
+                <button class="seat booked" data-seat="B9">B9</button>
+                <button class="seat available" data-seat="B10">B10</button>
+                <button class="seat available" data-seat="B11">B11</button>
+                <button class="seat booked" data-seat="B12">B12</button>
+
+                <button class="seat available" data-seat="C1">C1</button>
+                <button class="seat available" data-seat="C2">C2</button>
+                <button class="seat booked" data-seat="C3">C3</button>
+                <button class="seat available" data-seat="C4">C4</button>
+                <button class="seat available" data-seat="C5">C5</button>
+                <button class="seat booked" data-seat="C6">C6</button>
+                <button class="seat available" data-seat="C7">C7</button>
+                <button class="seat available" data-seat="C8">C8</button>
+                <button class="seat booked" data-seat="C9">C9</button>
+                <button class="seat available" data-seat="C10">C10</button>
+                <button class="seat available" data-seat="C11">C11</button>
+                <button class="seat booked" data-seat="C12">C12</button>
+
+                <button class="seat available" data-seat="D1">D1</button>
+                <button class="seat available" data-seat="D2">D2</button>
+                <button class="seat booked" data-seat="D3">D3</button>
+                <button class="seat available" data-seat="D4">D4</button>
+                <button class="seat available" data-seat="D5">D5</button>
+                <button class="seat booked" data-seat="D6">D6</button>
+                <button class="seat available" data-seat="D7">D7</button>
+                <button class="seat available" data-seat="D8">D8</button>
+                <button class="seat booked" data-seat="D9">D9</button>
+                <button class="seat available" data-seat="D10">D10</button>
+                <button class="seat available" data-seat="D11">D11</button>
+                <button class="seat booked" data-seat="D12">D12</button>
+                
+                <button class="seat available" data-seat="E1">E1</button>
+                <button class="seat available" data-seat="E2">E2</button>
+                <button class="seat booked" data-seat="E3">E3</button>
+                <button class="seat available" data-seat="E4">E4</button>
+                <button class="seat available" data-seat="E5">E5</button>
+                <button class="seat booked" data-seat="E6">E6</button>
+                <button class="seat available" data-seat="E7">E7</button>
+                <button class="seat available" data-seat="E8">E8</button>
+                <button class="seat booked" data-seat="E9">E9</button>
+                <button class="seat available" data-seat="E10">E10</button>
+                <button class="seat available" data-seat="E11">E11</button>
+                <button class="seat booked" data-seat="E12">E12</button>
+
+                <button class="seat available" data-seat="F1">F1</button>
+                <button class="seat available" data-seat="F2">F2</button>
+                <button class="seat booked" data-seat="F3">F3</button>
+                <button class="seat available" data-seat="F4">F4</button>
+                <button class="seat available" data-seat="F5">F5</button>
+                <button class="seat booked" data-seat="F6">F6</button>
+                <button class="seat available" data-seat="F7">F7</button>
+                <button class="seat available" data-seat="F8">F8</button>
+                <button class="seat booked" data-seat="F9">F9</button>
+                <button class="seat available" data-seat="F10">F10</button>
+                <button class="seat available" data-seat="F11">F11</button>
+                <button class="seat booked" data-seat="F12">F12</button>
+
+                <button class="seat available" data-seat="G1">G1</button>
+                <button class="seat available" data-seat="G2">G2</button>
+                <button class="seat booked" data-seat="G3">G3</button>
+                <button class="seat available" data-seat="G4">G4</button>
+                <button class="seat available" data-seat="G5">G5</button>
+                <button class="seat booked" data-seat="G6">G6</button>
+                <button class="seat available" data-seat="G7">G7</button>
+                <button class="seat available" data-seat="G8">G8</button>
+                <button class="seat booked" data-seat="G9">G9</button>
+                <button class="seat available" data-seat="G10">G10</button>
+                <button class="seat available" data-seat="G11">G11</button>
+                <button class="seat booked" data-seat="G12">G12</button>
+
+                <button class="seat available" data-seat="H1">H1</button>
+                <button class="seat available" data-seat="H2">H2</button>
+                <button class="seat booked" data-seat="H3">H3</button>
+                <button class="seat available" data-seat="H4">H4</button>
+                <button class="seat available" data-seat="H5">H5</button>
+                <button class="seat booked" data-seat="H6">H6</button>
+                <button class="seat available" data-seat="H7">H7</button>
+                <button class="seat available" data-seat="H8">H8</button>
+                <button class="seat booked" data-seat="H9">H9</button>
+                <button class="seat available" data-seat="H10">H10</button>
+                <button class="seat available" data-seat="H11">H11</button>
+                <button class="seat booked" data-seat="H12">H12</button>
+            </div>
+
+            <div class="booking-summary">
+                <p>Total (<span id="totalSeats">0</span> seats): <span id="totalPrice">₹0</span></p>
+                <button class="proceed-button" id="proceedToPayment">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title">Confirm Your Booking</h2>
+            
+            <div class="booking-details">
+                <h3>Booking Summary</h3>
+                <div class="detail-row"><span class="label">Movie:</span> <span class="value" id="modalMovie">The Great Movie</span></div>
+                <div class="detail-row"><span class="label">Date:</span> <span class="value" id="modalDate">27-09-2025</span></div>
+                <div class="detail-row"><span class="label">Theatre:</span> <span class="value" id="modalTheatre">PVR Central Mall</span></div>
+                <div class="detail-row"><span class="label">Slot:</span> <span class="value" id="modalSlot">10:00 AM</span></div>
+            </div>
+
+            <div class="seat-details">
+                <h3>Selected Seats</h3>
+                <p class="seats-list" id="modalSeatsList">A1, A2, B3</p>
+                <div class="seat-count">Total Tickets: <span id="modalTicketCount">3</span></div>
+            </div>
+
+            <div class="final-total">
+                <span class="label">Grand Total:</span> 
+                <span class="value" id="modalFinalPrice">₹450</span>
+            </div>
+
+            <div class="payment-options">
+                <h3>Select Payment Method (Not Integrated)</h3>
+                <div class="option-grid">
+                    <button class="payment-option"><i class="fa-solid fa-credit-card"></i> Card</button>
+                    <button class="payment-option"><i class="fa-solid fa-wallet"></i> UPI / Wallets</button>
+                    <button class="payment-option"><i class="fa-solid fa-qrcode"></i> Net Banking</button>
+                </div>
+            </div>
+
+            <button class="pay-now-button">Fake Pay Now</button>
+        </div>
+    </div>
+<script src="script.js"></script>
+</body>
+</html>
