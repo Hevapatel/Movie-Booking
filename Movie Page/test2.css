@@ -8,3 +8,5 @@
     .seat.selected { background: #22c55e; color: #001b12; font-weight: 700; }
     .seat.booked { background: #4b5563; color: #a3a3a3; cursor: not-allowed; text-decoration: line-through; }
     .tag { background: rgba(34,211,238,0.12); border: 1px solid rgba(34,211,238,0.35); color: #a5f3fc; }
+
+    
