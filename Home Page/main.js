@@ -18,14 +18,22 @@ l_btn.addEventListener('click',()=>{
 
   // Sample data
   const movies = [
-    { title: "Avengers", language: "English", genre: "Action", price: 300 },
-    { title: "3 Idiots", language: "Hindi", genre: "Comedy", price: 200 },
-    { title: "KGF", language: "Hindi", genre: "Action", price: 250 },
-    { title: "Chhello Divas", language: "Gujarati", genre: "Comedy", price: 150 },
-    { title: "Enthiran", language: "Tamil", genre: "Sci-Fi", price: 350 },
-    { title: "Swades", language: "Hindi", genre: "Drama", price: 180 },
-    { title: "Inception", language: "English", genre: "Sci-Fi", price: 120 },
-    { title: "Parasite", language: "Korean", genre: "Thriller", price: 100 }
+    { title: "Avengers", language: "English", genre: "Action", price: 300, rating: 8.5, likes: 1200000, img:"../Movie Posters/Avengers.jpg"},
+    { title: "3 Idiots", language: "Hindi", genre: "Comedy", price: 200, rating: 8.4, likes: 1500000, img:"../Movie Posters/3Idiots.jpg"},
+    { title: "KGF", language: "Hindi", genre: "Action", price: 250, rating: 8.2, likes: 1100000, img:"../Movie Posters/KGF.jpg" },
+    { title: "Chhello Divas", language: "Gujarati", genre: "Comedy", price: 150, rating: 7.8, likes: 500000, img:"../Movie Posters/ChelloDivas.jpg"},
+    { title: "Enthiran", language: "Tamil", genre: "Sci-Fi", price: 350, rating: 7.9, likes: 950000, img:"../Movie Posters/Enthiran.png"},
+    { title: "Swades", language: "Hindi", genre: "Drama", price: 180 , rating: 8.2, likes: 700000, img:"../Movie Posters/Swades.jpg"},
+    { title: "Inception", language: "English", genre: "Sci-Fi", price: 120 , rating: 8.8, likes: 1600000, img:"../Movie Posters/Inception.jpg"},
+    { title: "Parasite", language: "Korean", genre: "Thriller", price: 100, rating: 8.6, likes: 900000, img:"../Movie Posters/Parasite.jpg"},
+    { title: "The Dark Knight", language: "English", genre: "Action", price: 320, rating: 9.0, likes: 2000000, img:"../Movie Posters/TheDarkKnight2.jpg"},
+    { title: "Munna Bhai M.B.B.S.", language: "Hindi", genre: "Comedy", price: 220, rating: 8.1, likes: 1300000, img:"../Movie Posters/MunnabhaiMBBS.jpg"},
+    { title: "Baahubali", language: "Telugu", genre: "Action", price: 280, rating: 8.1, likes: 1400000, img:"../Movie Posters/Bahubali.jpg"},
+    { title: "Hellaro", language: "Gujarati", genre: "Drama", price: 160, rating: 8.3, likes: 400000, img:"../Movie Posters/Hellaro.jpg"},
+    { title: "Interstellar", language: "English", genre: "Sci-Fi", price: 360, rating: 8.7, likes: 1700000, img:"../Movie Posters/Interstellar.jpg"},
+    { title: "Dangal", language: "Hindi", genre: "Drama", price: 200, rating: 8.4, likes: 1500000, img:"../Movie Posters/Dangal.jpg"},
+    { title: "Train to Busan", language: "Korean", genre: "Thriller", price: 130, rating: 8.0, likes: 800000, img:"../Movie Posters/TrainToBusan.jpg"},
+    { title: "Robot 2.0", language: "Tamil", genre: "Sci-Fi", price: 370, rating: 7.2, likes: 750000, img:"../Movie Posters/Robot2.0.png"}
   ];
 
   const els = {
@@ -56,10 +64,13 @@ l_btn.addEventListener('click',()=>{
       const card = document.createElement('div');
       card.className = 'movie';
       card.innerHTML = `
+        <img src="${m.img}" alt="${m.title}" class="movie-poster" />
         <h3>${m.title}</h3>
-        <div>Language: ${m.language}</div>
-        <div>Genre: ${m.genre}</div>
-        <div>Price: ₹${m.price}</div>
+        <p>Language: ${m.language}</p>
+        <p>Genre: ${m.genre}</p>
+        <p>Price: ₹${m.price}</p>
+        <p>⭐ Rating: ${m.rating}</p>
+        <p>❤️ Likes: ${m.likes.toLocaleString()}</p>
       `;
       els.list.appendChild(card);
     });
@@ -119,6 +130,13 @@ l_btn.addEventListener('click',()=>{
     state.language = state.genre = state.maxPrice = '';
     applyAllFilters();
   });
+
+  // 👇 This listens for changes in the search bar and updates results instantly
+els.searchInput.addEventListener('input', () => {
+  state.q = els.searchInput.value; // update state with current value
+  applyAllFilters(); // re-render based on new query (even if empty)
+});
+
 
   // initial render
   render(movies);
