@@ -8,40 +8,50 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="test2.css">
+  
   <style>
-  
-    
-  </style>
+    :root { --bg: #0b0f19; --card: #12182a; --muted: #98a2b3; --accent: #22d3ee; }
+    html, body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: white; }
+    .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(8px); }
+    .scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+    .scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+    .seat { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 12px; cursor: pointer; user-select: none; }
+    .seat.available { background: #1f2937; }
+    .seat.selected { background: #22c55e; color: #001b12; font-weight: 700; }
+    .seat.booked { background: #4b5563; color: #a3a3a3; cursor: not-allowed; text-decoration: line-through; }
+    .tag { background: rgba(34,211,238,0.12); border: 1px solid rgba(34,211,238,0.35); color: #a5f3fc; }
+
+    
+
+</style>
 </head>
 <body class="min-h-screen">
-    <header class="sticky top-0 z-40 glass">
+    <header class=" top-0 z-40 glass" style="height: 150px;">    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <h1 style="color: white;font-size: 30px;">MovieHub</h1>
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-2xl bg-cyan-400/20 grid place-items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-cyan-300"><path d="M4 6a2 2 0 012-2h7l2 2h3a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/></svg>
-        </div>
-        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight">MovieHub</h1>
+       
+        
       </div>
       <div class="flex items-center gap-3 w-[260px] sm:w-[360px]">
-        <select id="movieSelect" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400">
+        <select id="movieSelect" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400" style="background-color: violet;">
           <option value="">Select a movie…</option>
         </select>
-        <button id="scrollToBooking" class="hidden sm:inline-flex items-center gap-2 bg-cyan-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95 active:scale-95 transition">
+        <button id="scrollToBooking" class="hidden sm:inline-flex items-center gap-2 bg-cyan-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95 active:scale-95 transition" style="height: 50px; width: 220px;">
           Book Now
         </button>
       </div>
     </div>
   </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid lg:grid-cols-3 gap-6">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid lg:grid-cols-3 gap-6" style=" display: flex; flex-direction: row;">
         <section class="lg:col-span-2 space-y-4">
       <div class="glass rounded-3xl overflow-hidden">
         <div class="aspect-video bg-black">
           <iframe id="trailerFrame" class="w-full h-full" src="" title="Movie trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="p-4 sm:p-6">
-          <div class="flex flex-wrap items-center gap-3 mb-3">
+          <div class="flex flex-wrap items-center gap-1 mb-3">
             <span id="ageBadge" class="px-2.5 py-1 rounded-lg tag text-xs font-semibold">U/A</span>
             <span id="langBadge" class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs">Language</span>
             <span id="genreBadge" class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs">Genre</span>
@@ -73,9 +83,9 @@
       </div>
     </section>
 
-        <aside class="space-y-4">
+        <aside class="space-y-4" >
       <div class="glass rounded-3xl p-4">
-        <img id="posterImg" src="" alt="Poster" class="w-full aspect-[2/3] object-cover rounded-2xl" />
+        <img id="posterImg" src="" alt="Poster" class="w-full aspect-[2/3] object-cover rounded-2xl" style="width: 400px;" />
         <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-white/80">
           <div class="glass rounded-xl p-3 text-center">
             <div class="text-white text-lg font-bold" id="quickRating">—</div>
@@ -92,16 +102,16 @@
         </div>
       </div>
 
-      <div class="glass rounded-3xl p-4">
+      <div class="glass rounded-3xl p-4" style="height: 200px; margin: 1px;"  >
         <h3 class="font-semibold mb-2">Filters</h3>
-        <div class="flex flex-wrap gap-2">
-          <select id="filterLanguage" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm">
+        <div class="flex flex-wrap gap-2" style="display: flex; flex-direction: row ;width: 400px;" >
+          <select id="filterLanguage" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm"style="width:150px;">
             <option value="">Language</option>
           </select>
-          <select id="filterGenre" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm">
+          <select id="filterGenre" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm" style="width: 100px;">
             <option value="">Genre</option>
           </select>
-          <button id="clearFilters" class="text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10">Clear</button>
+          <button id="clearFilters" class="text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10" style="width: 100px;" >Clear</button>
         </div>
       </div>
     </aside>
@@ -121,7 +131,7 @@
         </div>
       </div>
 
-      <div class="mt-5 grid lg:grid-cols-3 gap-4">
+      <div class="mt-5 grid lg:grid-cols-3 gap-4" style=" display: flex; flex-direction: row;">
                 <div class="space-y-4">
           <div>
             <label class="text-xs text-white/70">Date</label>
@@ -185,34 +195,29 @@
 
   <script>
     const movies = [
-      { title: "Avengers", language: "English", genre: "Action", price: 300, rating: 8.5, likes: 1200000, age: "U/A 13+", description: "Earth's mightiest heroes team up to fight against Loki and his alien army.", cast: ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson"], reviews: ["Action-packed and entertaining!", "One of the best superhero team-up movies."], trailer: "https://www.youtube.com/watch?v=eOrNdBpGMv8" },
-      { title: "3 Idiots", language: "Hindi", genre: "Comedy", price: 200, rating: 8.4, likes: 1500000, age: "U/A", description: "Three friends navigate college life while challenging the education system.", cast: ["Aamir Khan", "R. Madhavan", "Sharman Joshi"], reviews: ["Inspirational and hilarious at the same time.", "A must-watch for students."], trailer: "https://www.youtube.com/watch?v=xvszmNXdM4w" },
-      { title: "KGF", language: "Hindi", genre: "Action", price: 250, rating: 8.2, likes: 1100000, age: "U/A 16+", description: "A young man rises from poverty to become a fearsome gangster in the Kolar Gold Fields.", cast: ["Yash", "Srinidhi Shetty"], reviews: ["High-voltage action and mass entertainment!", "Yash's performance is powerful."], trailer: "https://www.youtube.com/watch?v=GpMoLL_80Jk" },
-      { title: "Chhello Divas", language: "Gujarati", genre: "Comedy", price: 150, rating: 7.8, likes: 500000, age: "U/A", description: "A coming-of-age comedy about college students and their fun-filled lives.", cast: ["Malhar Thakar", "Yash Soni", "Mitil Jain"], reviews: ["Relatable and funny Gujarati film.", "Perfect slice of college life comedy."], trailer: "https://www.youtube.com/watch?v=yeU2xb7EJwY" },
-      { title: "Enthiran", language: "Tamil", genre: "Sci-Fi", price: 350, rating: 7.9, likes: 950000, age: "U/A 13+", description: "A scientist creates a humanoid robot that develops emotions and turns rogue.", cast: ["Rajinikanth", "Aishwarya Rai Bachchan"], reviews: ["Rajinikanth at his best with stunning VFX.", "Sci-fi blockbuster of Indian cinema."], trailer: "https://www.youtube.com/watch?v=sY_F6issHsU" },
-      { title: "Swades", language: "Hindi", genre: "Drama", price: 180, rating: 8.2, likes: 700000, age: "U/A", description: "An NRI scientist returns to his homeland and rediscovers his roots.", cast: ["Shah Rukh Khan", "Gayatri Joshi"], reviews: ["Heart-touching and socially relevant.", "SRK's most underrated performance."], trailer: "https://www.youtube.com/watch?v=vc7AZNWvs0M" },
-      { title: "Inception", language: "English", genre: "Sci-Fi", price: 120, rating: 8.8, likes: 1600000, age: "U/A 16+", description: "A skilled thief enters people's dreams to steal secrets and plant ideas.", cast: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"], reviews: ["Mind-bending and visually stunning.", "Christopher Nolan’s masterpiece."], trailer: "https://www.youtube.com/watch?v=YoHD9XEInc0" },
-      { title: "Parasite", language: "Korean", genre: "Thriller", price: 100, rating: 8.6, likes: 900000, age: "U/A 16+", description: "A poor family infiltrates a wealthy household with unexpected consequences.", cast: ["Song Kang-ho", "Choi Woo-shik", "Park So-dam"], reviews: ["Dark, brilliant, and thought-provoking.", "Oscar-winning cinematic gem."], trailer: "https://www.youtube.com/watch?v=isOGD_7hNIY" },
-      { title: "The Dark Knight", language: "English", genre: "Action", price: 320, rating: 9.0, likes: 2000000, age: "U/A 16+", description: "Batman faces his greatest challenge in the form of the Joker.", cast: ["Christian Bale", "Heath Ledger", "Aaron Eckhart"], reviews: ["Heath Ledger’s Joker is legendary.", "Best superhero movie ever made."], trailer: "https://www.youtube.com/watch?v=EXeTwQWrcwY" },
-      { title: "Munna Bhai M.B.B.S.", language: "Hindi", genre: "Comedy", price: 220, rating: 8.1, likes: 1300000, age: "U/A", description: "A goon enrolls in medical college to fulfill his father’s dream.", cast: ["Sanjay Dutt", "Arshad Warsi", "Boman Irani"], reviews: ["Funny and emotional in equal measure.", "Circuit and Munna’s friendship is iconic."], trailer: "https://www.youtube.com/watch?v=4v-gf3DxJrs" },
-      { title: "Baahubali", language: "Telugu", genre: "Action", price: 280, rating: 8.1, likes: 1400000, age: "U/A 13+", description: "A young man learns about his royal heritage and rises to reclaim his kingdom.", cast: ["Prabhas", "Rana Daggubati", "Anushka Shetty"], reviews: ["Visually grand and epic storytelling.", "Indian cinema at global standards."], trailer: "https://www.youtube.com/watch?v=sOEg_YZQsTI" },
-      { title: "Hellaro", language: "Gujarati", genre: "Drama", price: 160, rating: 8.3, likes: 400000, age: "U/A 13+", description: "Set in 1975, women in a village find liberation through Garba dance.", cast: ["Shraddha Dangar", "Jayesh More"], reviews: ["National Award-winning masterpiece.", "Powerful story of women empowerment."], trailer: "https://www.youtube.com/watch?v=bltwI5d3U9E" },
-      { title: "Interstellar", language: "English", genre: "Sci-Fi", price: 360, rating: 8.7, likes: 1700000, age: "U/A 13+", description: "Astronauts travel through a wormhole to save humanity from extinction.", cast: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"], reviews: ["Visually stunning and emotionally deep.", "Nolan delivers another sci-fi classic."], trailer: "https://www.youtube.com/watch?v=zSWdZVtXT7E" },
-      { title: "Dangal", language: "Hindi", genre: "Drama", price: 200, rating: 8.4, likes: 1500000, age: "U/A", description: "Based on the real story of wrestler Mahavir Singh Phogat training his daughters.", cast: ["Aamir Khan", "Fatima Sana Shaikh", "Sanya Malhotra"], reviews: ["Inspiring and brilliantly acted.", "One of the best sports dramas."], trailer: "https://www.youtube.com/watch?v=x_7YlGv9u1g" },
-      { title: "Train to Busan", language: "Korean", genre: "Thriller", price: 130, rating: 8.0, likes: 800000, age: "U/A 16+", description: "Passengers struggle to survive on a train during a zombie outbreak.", cast: ["Gong Yoo", "Ma Dong-seok", "Kim Su-an"], reviews: ["Thrilling and emotional zombie movie.", "Best Korean action-horror film."], trailer: "https://www.youtube.com/watch?v=pyWuHv2-Abk" },
-      { title: "Robot 2.0", language: "Tamil", genre: "Sci-Fi", price: 370, rating: 7.2, likes: 750000, age: "U/A 13+", description: "Dr. Vaseegaran and Chitti battle an evil force threatening mobile networks.", cast: ["Rajinikanth", "Akshay Kumar", "Amy Jackson"], reviews: ["Amazing VFX and grand scale.", "Unique concept but a bit lengthy."], trailer: "https://www.youtube.com/watch?v=MVbeoSPqRs4" }
+      // NOTE: Poster paths are assumed. Replace 'posters/...' with your actual image file paths.
+      { title: "Avengers", language: "English", genre: "Action", price: 300, rating: 8.5, likes: 1200000, age: "U/A 13+", description: "Earth's mightiest heroes team up to fight against Loki and his alien army.", cast: ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson"], reviews: ["Action-packed and entertaining!", "One of the best superhero team-up movies."], trailer: "https://www.youtube.com/watch?v=eOrNdBpGMv8", poster: "../Movie Posters/Avengers.jpg" },
+      { title: "3 Idiots", language: "Hindi", genre: "Comedy", price: 200, rating: 8.4, likes: 1500000, age: "U/A", description: "Three friends navigate college life while challenging the education system.", cast: ["Aamir Khan", "R. Madhavan", "Sharman Joshi"], reviews: ["Inspirational and hilarious at the same time.", "A must-watch for students."], trailer: "https://www.youtube.com/watch?v=xvszmNXdM4w", poster: "3idiots.png" },
+      { title: "KGF", language: "Hindi", genre: "Action", price: 250, rating: 8.2, likes: 1100000, age: "U/A 16+", description: "A young man rises from poverty to become a fearsome gangster in the Kolar Gold Fields.", cast: ["Yash", "Srinidhi Shetty"], reviews: ["High-voltage action and mass entertainment!", "Yash's performance is powerful."], trailer: "https://www.youtube.com/watch?v=GpMoLL_80Jk", poster: "../Movie Posters/KGF.jpg" },
+      { title: "Chhello Divas", language: "Gujarati", genre: "Comedy", price: 150, rating: 7.8, likes: 500000, age: "U/A", description: "A coming-of-age comedy about college students and their fun-filled lives.", cast: ["Malhar Thakar", "Yash Soni", "Mitil Jain"], reviews: ["Relatable and funny Gujarati film.", "Perfect slice of college life comedy."], trailer: "https://www.youtube.com/watch?v=yeU2xb7EJwY", poster: "../Movie Posters/ChelloDivas.jpg" },
+      { title: "Enthiran", language: "Tamil", genre: "Sci-Fi", price: 350, rating: 7.9, likes: 950000, age: "U/A 13+", description: "A scientist creates a humanoid robot that develops emotions and turns rogue.", cast: ["Rajinikanth", "Aishwarya Rai Bachchan"], reviews: ["Rajinikanth at his best with stunning VFX.", "Sci-fi blockbuster of Indian cinema."], trailer: "https://www.youtube.com/watch?v=sY_F6issHsU", poster: "../Movie Posters/Enthiran.png" },
+      { title: "Swades", language: "Hindi", genre: "Drama", price: 180, rating: 8.2, likes: 700000, age: "U/A", description: "An NRI scientist returns to his homeland and rediscovers his roots.", cast: ["Shah Rukh Khan", "Gayatri Joshi"], reviews: ["Heart-touching and socially relevant.", "SRK's most underrated performance."], trailer: "https://www.youtube.com/watch?v=vc7AZNWvs0M", poster: "posters/swades.png" },
+      { title: "Inception", language: "English", genre: "Sci-Fi", price: 120, rating: 8.8, likes: 1600000, age: "U/A 16+", description: "A skilled thief enters people's dreams to steal secrets and plant ideas.", cast: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"], reviews: ["Mind-bending and visually stunning.", "Christopher Nolan’s masterpiece."], trailer: "https://www.youtube.com/watch?v=YoHD9XEInc0", poster: "Movie Posters/inception.png" },
+      { title: "Parasite", language: "Korean", genre: "Thriller", price: 100, rating: 8.6, likes: 900000, age: "U/A 16+", description: "A poor family infiltrates a wealthy household with unexpected consequences.", cast: ["Song Kang-ho", "Choi Woo-shik", "Park So-dam"], reviews: ["Dark, brilliant, and thought-provoking.", "Oscar-winning cinematic gem."], trailer: "https://www.youtube.com/watch?v=isOGD_7hNIY", poster: "Movie Posters/parasite.png" },
+      { title: "The Dark Knight", language: "English", genre: "Action", price: 320, rating: 9.0, likes: 2000000, age: "U/A 16+", description: "Batman faces his greatest challenge in the form of the Joker.", cast: ["Christian Bale", "Heath Ledger", "Aaron Eckhart"], reviews: ["Heath Ledger’s Joker is legendary.", "Best superhero movie ever made."], trailer: "https://www.youtube.com/watch?v=EXeTwQWrcwY", poster: "Movie Posters/darkknight.png" },
+      { title: "Munna Bhai M.B.B.S.", language: "Hindi", genre: "Comedy", price: 220, rating: 8.1, likes: 1300000, age: "U/A", description: "A goon enrolls in medical college to fulfill his father’s dream.", cast: ["Sanjay Dutt", "Arshad Warsi", "Boman Irani"], reviews: ["Funny and emotional in equal measure.", "Circuit and Munna’s friendship is iconic."], trailer: "https://www.youtube.com/watch?v=4v-gf3DxJrs", poster: " Movie Posters/munnabhai.png" },
+      { title: "Baahubali", language: "Telugu", genre: "Action", price: 280, rating: 8.1, likes: 1400000, age: "U/A 13+", description: "A young man learns about his royal heritage and rises to reclaim his kingdom.", cast: ["Prabhas", "Rana Daggubati", "Anushka Shetty"], reviews: ["Visually grand and epic storytelling.", "Indian cinema at global standards."], trailer: "https://www.youtube.com/watch?v=sOEg_YZQsTI", poster: "Movie Posters/baahubali.png" },
+      { title: "Hellaro", language: "Gujarati", genre: "Drama", price: 160, rating: 8.3, likes: 400000, age: "U/A 13+", description: "Set in 1975, women in a village find liberation through Garba dance.", cast: ["Shraddha Dangar", "Jayesh More"], reviews: ["National Award-winning masterpiece.", "Powerful story of women empowerment."], trailer: "https://www.youtube.com/watch?v=bltwI5d3U9E", poster: "posters/hellaro.png" },
+      { title: "Interstellar", language: "English", genre: "Sci-Fi", price: 360, rating: 8.7, likes: 1700000, age: "U/A 13+", description: "Astronauts travel through a wormhole to save humanity from extinction.", cast: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"], reviews: ["Visually stunning and emotionally deep.", "Nolan delivers another sci-fi classic."], trailer: "https://www.youtube.com/watch?v=zSWdZVtXT7E", poster: "posters/interstellar.png" },
+      { title: "Dangal", language: "Hindi", genre: "Drama", price: 200, rating: 8.4, likes: 1500000, age: "U/A", description: "Based on the real story of wrestler Mahavir Singh Phogat training his daughters.", cast: ["Aamir Khan", "Fatima Sana Shaikh", "Sanya Malhotra"], reviews: ["Inspiring and brilliantly acted.", "One of the best sports dramas."], trailer: "https://www.youtube.com/watch?v=x_7YlGv9u1g", poster: "posters/dangal.png" },
+      { title: "Train to Busan", language: "Korean", genre: "Thriller", price: 130, rating: 8.0, likes: 800000, age: "U/A 16+", description: "Passengers struggle to survive on a train during a zombie outbreak.", cast: ["Gong Yoo", "Ma Dong-seok", "Kim Su-an"], reviews: ["Thrilling and emotional zombie movie.", "Best Korean action-horror film."], trailer: "https://www.youtube.com/watch?v=pyWuHv2-Abk", poster: "posters/traintobusan.png" },
+      { title: "Robot 2.0", language: "Tamil", genre: "Sci-Fi", price: 370, rating: 7.2, likes: 750000, age: "U/A 13+", description: "Dr. Vaseegaran and Chitti battle an evil force threatening mobile networks.", cast: ["Rajinikanth", "Akshay Kumar", "Amy Jackson"], reviews: ["Amazing VFX and grand scale.", "Unique concept but a bit lengthy."], trailer: "https://www.youtube.com/watch?v=MVbeoSPqRs4", poster: "posters/robot2.0.png" }
     ];
 
     // ======= HELPERS =======
     const el = id => document.getElementById(id);
-    const trailerToThumb = url => {
-      // Convert YT watch URL to a poster thumbnail
-      try {
-        const v = new URL(url).searchParams.get('v');
-        return `https://img.youtube.com/vi/${v}/hqdefault.jpg`;
-      } catch { return ""; }
-    };
-
+    
+    // Removed trailerToThumb function as it's no longer needed for the poster image.
     const unique = arr => [...new Set(arr)];
     
     // New: Function to generate QR code URL (using Google Charts API)
@@ -289,7 +294,7 @@
       // Hide ticket section on movie change
       el('ticketContainer').classList.add('hidden');
 
-      // Trailer iframe
+      // Trailer iframe (remains based on YouTube URL)
       const v = new URL(m.trailer).searchParams.get('v');
       el('trailerFrame').src = v ? `https://www.youtube.com/embed/${v}` : m.trailer;
 
@@ -303,8 +308,8 @@
       el('priceValue').textContent = m.price;
       el('likesValue').textContent = Intl.NumberFormat('en', {notation:'compact'}).format(m.likes) + ' likes';
 
-      // Poster & quick facts
-      el('posterImg').src = trailerToThumb(m.trailer);
+      // Poster & quick facts - ***MODIFIED LINE***
+      el('posterImg').src = m.poster; 
       el('quickRating').textContent = m.rating;
       el('quickPrice').textContent = `₹${m.price}`;
       el('quickGenre').textContent = `${m.genre} • ${m.language}`;
