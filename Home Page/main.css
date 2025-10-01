@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins';
 }
 
 html, body {
@@ -27,28 +29,33 @@ h1{
     color: #C0C0C0;   
     font-size: 25px;
     font-weight: 600;
-    margin: 5px 25px 5px 5px;
+    margin: 3px 25px 5px 5px;
+    text-align: center;
 }
 h4{
     color: #C0C0C0;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     margin: 0 25px 5px 5px;
+    text-align: center;
 }
 i{
-    color: white;
+    color: #C0C0C0;
     font-size: 30px;
     cursor: pointer;
 }
 #profile-block{
     width: 200px;
     height: 150px;
-    position: fixed;
+    position: absolute;
     top: 12vh;
     right: 0;
-    background-color: palevioletred;
-    box-shadow: 0px 0px 5px white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: #C0C0C0;
     display: none;
+    z-index: 2000;
+    overflow: hidden;
 }
 #profile-block>div{
     width: 100%;
@@ -59,27 +66,30 @@ i{
 }
 #profile-block>div>p{
     font-size: 20px;
+    color: #0F172A;
 }
 #profile-block>div>button{
     width: 60%;
     height: 35px;
-    background-color: white;
-    color: palevioletred;
+    background-color: #0F172A;
+    color: #C0C0C0;
     border: none;
+    border-radius: 10px;
     font-weight: 500;
     font-size: 16px;
 }
 #profile-block>div>button:hover{
     background-color: transparent;
-    border: 1px solid white;
-    color: white;
+    border: 1.5px solid #0F172A;
+    color: #0F172A;
 }
 #profile-block>p{
     font-size: 20px;
     font-weight: 700;
     position: absolute;
     top: 1vh;
-    right: 5px;
+    right: 13px;
+    color: #0F172A;
 }
 #profile-block>p:hover{
     cursor: pointer;
@@ -197,16 +207,17 @@ button>i{
 /* Filters dropdown (hidden initially) */
 .filter-popup {
   position: absolute;
-  top: 124px;             /* distance from header bar */
+  top: 125px;             /* distance from header bar */
   right: 1px;           /* align with Filters button */
   width: 300px;
-  height: 350px;
+  height: 370px;
   background: #C0C0C0;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   padding: 15px;
   display: none;         /* hidden by default */
   z-index: 1000;
+  color: #0F172A;
 }
 
 /* Show when active */
@@ -234,7 +245,7 @@ button>i{
   margin-top: 12px;
   padding: 8px 12px;
   width: 100%;
-  background: white;
+  background: #0F172A;
   color: #C0C0C0;
   border: none;
   border-radius: 6px;
@@ -243,8 +254,8 @@ button>i{
 
 .filter-popup button:hover {
   background: transparent;
-  border: 2px solid white;
-  color: white;
+  border: 2px solid #0F172A;
+  color: #0F172A;
 }
 
 
@@ -260,7 +271,7 @@ footer{
     background-color: #0F172A;
     color: #C0C0C0;
     font-size: 20px;
-    margin: 30px 0px;
+    margin: 30px 30px;
     width: 500px;
     padding: 20px;
     height: 250px;
