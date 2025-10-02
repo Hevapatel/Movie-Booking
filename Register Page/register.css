@@ -12,12 +12,12 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: blueviolet;
+    color: #0F172A;
 }
 body>section{
     width: 60%;
     height: 70%;
-    border: 1px solid blueviolet;
+    border: 1px solid #0F172A;
     display: flex;
     border-radius: 10px;
 
@@ -25,9 +25,9 @@ body>section{
 body>section>aside{
     width: 35%;
     height: 100%;
-    background-color: blueviolet;
+    background-color: #0F172A;
     border-radius: 10px 0px 0px 10px;
-    color: white;
+    color: #C0C0C0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,8 +59,8 @@ button{
     width: 25%;
     height: 40px;
     border: none;
-    background-color: blueviolet;
-    color: white;
+    background-color:#0F172A;
+    color: #C0C0C0;
     font-size: 15px;
     font-weight: 500;
     border-radius: 5px;
@@ -68,12 +68,12 @@ button{
 }
 button:hover{
     background-color: transparent;
-    border: 1px solid blueviolet;
-    color: blueviolet;
+    border: 1px solid #0F172A;
+    color: #0F172A;
 }
 a{
     text-decoration: none;
-    color: blueviolet;
+    color: #0F172A;
     font-size: 20px;
     font-weight: 600;
 }
