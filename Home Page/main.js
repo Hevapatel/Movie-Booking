@@ -72,6 +72,13 @@ l_btn.addEventListener('click',()=>{
         <p>⭐ Rating: ${m.rating}</p>
         <p>❤️ Likes: ${m.likes.toLocaleString()}</p>
       `;
+      card.addEventListener('click', () => {
+      // Save clicked movie details in localStorage
+      localStorage.setItem("selectedMovie", JSON.stringify(m));
+      
+      const pageName = m.title.replace(/\s+/g, '').replace(/[^a-zA-Z0-9\-]/g, '');
+      window.location.href = `../Movie Page/Movies/${pageName}.html`;// change filename if different
+    });
       els.list.appendChild(card);
     });
   }

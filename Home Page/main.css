@@ -176,6 +176,7 @@ button>i{
     justify-content: space-around;
     padding: 10px;
     text-align: center;
+    cursor: pointer;
 }
 .movie>h3,p{
     color: #C0C0C0;

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Details & Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    :root { --bg: #0F172A; --card: #0F172A; --muted: #C0C0C0; --accent: #22d3ee; }
+    html, body { font-family: 'Poppins'; background: var(--bg); color: #C0C0C0; }
+    .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(8px); }
+    .scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+    .scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 999px; }
+    .seat { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 12px; cursor: pointer; user-select: none; }
+    .seat.available { background: #1f2937; }
+    .seat.selected { background: #22c55e; color: #001b12; font-weight: 700; }
+    .seat.booked { background: #4b5563; color: #a3a3a3; cursor: not-allowed; text-decoration: line-through; }
+    .tag { background: rgba(34,211,238,0.12); border: 1px solid rgba(34,211,238,0.35); color: #a5f3fc; }
+
+    
+
+</style>
+</head>
+<body class="min-h-screen">
+    <header class=" top-0 z-40 glass" style="height: 150px;">    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+    <h1 style="color: #C0C0C0;font-size: 30px;">Ticket Tales</h1>
+      <div class="flex items-center gap-3">
+       
+        
+      </div>
+      <div class="flex items-center gap-3 w-[260px] sm:w-[360px]">
+        <select id="movieSelect" class="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400" style="background-color: #0F172A;">
+          <option value="">Select a movie…</option>
+        </select>
+        <button id="scrollToBooking" class="hidden sm:inline-flex items-center gap-2 bg-cyan-400 text-black font-semibold px-4 py-2 rounded-xl hover:brightness-95 active:scale-95 transition" style="height: 50px; width: 220px;">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid lg:grid-cols-3 gap-6" style=" display: flex; flex-direction: row;">
+        <section class="lg:col-span-2 space-y-4">
+      <div class="glass rounded-3xl overflow-hidden">
+        <div class="aspect-video bg-black">
+          <iframe id="trailerFrame" class="w-full h-full" src="" title="Movie trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div class="p-4 sm:p-6">
+          <div class="flex flex-wrap items-center gap-1 mb-3">
+            <span id="ageBadge" class="px-2.5 py-1 rounded-lg tag text-xs font-semibold">U/A</span>
+            <span id="langBadge" class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs">Language</span>
+            <span id="genreBadge" class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs">Genre</span>
+            <span id="ratingBadge" class="px-2.5 py-1 rounded-lg bg-amber-400/20 border border-amber-200/30 text-amber-200 text-xs">★ <span id="ratingValue">—</span></span>
+            <span id="priceBadge" class="px-2.5 py-1 rounded-lg bg-emerald-400/15 border border-emerald-300/30 text-emerald-200 text-xs">₹<span id="priceValue">—</span></span>
+          </div>
+          <h2 id="movieTitle" class="text-2xl sm:text-3xl font-bold"></h2>
+          <p id="movieDescription" class="text-sm sm:text-base text-[color:var(--muted)] mt-2"></p>
+          <div class="flex items-center gap-6 mt-4 text-sm text-[color:var(--muted)]">
+            <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6 4 4 6.5 4c1.74 0 3.41 1.01 4.22 2.53C11.09 5.01 12.76 4 14.5 4 17 4 19 6 19 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> <span id="likesValue">— likes</span></div>
+            <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> Top rated pick</div>
+          </div>
+
+                    <div class="mt-6">
+            <h3 class="text-sm uppercase tracking-wider text-white/70 mb-3">Cast</h3>
+            <div id="castRow" class="scrollbar flex gap-3 overflow-x-auto pb-1"></div>
+          </div>
+
+                    <div class="mt-6">
+            <h3 class="text-sm uppercase tracking-wider text-white/70 mb-3">Reviews</h3>
+            <div id="reviewsCol" class="grid sm:grid-cols-2 gap-3"></div>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button id="bookNowTop" class="bg-cyan-400 text-black font-semibold px-5 py-2.5 rounded-xl hover:brightness-95 active:scale-95 transition">Book Now</button>
+            <a id="watchOnYT" href="#" target="_blank" class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10">Open trailer on YouTube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <aside class="space-y-4" >
+      <div class="glass rounded-3xl p-4">
+        <img id="posterImg" src="" alt="Poster" class="w-full aspect-[2/3] object-cover rounded-2xl" style="width: 400px;" />
+        <div class="mt-3 grid grid-cols-2 gap-2 text-xs text-white/80">
+          <div class="glass rounded-xl p-3 text-center">
+            <div class="text-white text-lg font-bold" id="quickRating">—</div>
+            <div class="text-white/60">Rating</div>
+          </div>
+          <div class="glass rounded-xl p-3 text-center">
+            <div class="text-white text-lg font-bold" id="quickPrice">—</div>
+            <div class="text-white/60">Price</div>
+          </div>
+          <div class="glass rounded-xl p-3 text-center col-span-2">
+            <div class="text-white text-sm" id="quickGenre">—</div>
+            <div class="text-white/60 text-xs">Genre • Language</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-3xl p-4" style="height: 200px; margin: 1px;"  >
+        <h3 class="font-semibold mb-2">Filters</h3>
+        <div class="flex flex-wrap gap-2" style="display: flex; flex-direction: row ;width: 400px;" >
+          <select id="filterLanguage" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm"style="width:150px;background-color: #0F172A;">
+            <option value="">Language</option>
+          </select>
+          <select id="filterGenre" class="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm" style="width: 100px;background-color: #0F172A;">
+            <option value="">Genre</option>
+          </select>
+          <button id="clearFilters" class="text-xs px-3 py-2 rounded-lg bg-white/5 border border-white/10" style="width: 100px;" >Clear</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+    <section id="bookingSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+    <div class="glass rounded-3xl p-4 sm:p-6">
+      <div class="flex items-start justify-between gap-3 flex-wrap">
+        <div>
+          <h3 class="text-xl sm:text-2xl font-bold">Book Tickets</h3>
+          <p class="text-white/60 text-sm">Pick your date, theatre and slot, then choose seats.</p>
+        </div>
+        <div class="flex items-center gap-3 text-xs">
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-3 h-3 rounded bg-[#22c55e]"></span> Selected</span>
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-3 h-3 rounded bg-[#1f2937]"></span> Available</span>
+          <span class="inline-flex items-center gap-2"><span class="inline-block w-3 h-3 rounded bg-[#4b5563]"></span> Booked</span>
+        </div>
+      </div>
+
+      <div class="mt-5 grid lg:grid-cols-3 gap-4" style=" display: flex; flex-direction: row;">
+                <div class="space-y-4">
+          <div>
+            <label class="text-xs text-white/70">Date</label>
+            <input id="dateInput" type="date" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2" />
+          </div>
+          <div>
+            <label class="text-xs text-white/70">Theatre</label>
+            <select id="theatreSelect" class="w-full mt-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2" style="background-color: #0F172A;"></select>
+          </div>
+          <div>
+            <label class="text-xs text-white/70">Slot</label>
+            <div id="slotRow" class="mt-1 flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+                <div class="lg:col-span-2">
+          <div class="glass rounded-2xl p-3">
+            <div id="seatsGrid" class="grid grid-cols-12 gap-2 justify-items-center"></div>
+          </div>
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <div class="text-white/80 text-sm">Total (<span id="selectedCount">0</span> seats): <span id="totalPrice">₹0</span></div>
+            <button id="proceedBtn" class="bg-emerald-400 text-black font-semibold px-5 py-2.5 rounded-xl hover:brightness-95 active:scale-95 transition">Proceed to Payment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+    <section id="ticketContainer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 hidden">
+    <div class="glass rounded-3xl p-4 sm:p-6 mb-10">
+      <h3 class="text-xl sm:text-2xl font-bold text-emerald-400 mb-4">✅ Booking Confirmed!</h3>
+      <div id="ticketOutput" class="flex justify-center">
+              </div>
+    </div>
+  </section>
+
+    <div id="modal" class="fixed inset-0 hidden place-items-center bg-black/50 p-4 " style="margin: 80px;">
+    <div class="glass rounded-3xl max-w-md w-full p-6">
+      <div class="flex items-start justify-between">
+        <h4 class="text-xl font-bold">Booking Summary</h4>
+        <button id="closeModal" class="text-white/60 hover:text-white">✕</button>
+      </div>
+      <div class="mt-4 space-y-2 text-sm text-white/80">
+        <div><span class="text-white/60">Movie:</span> <span id="sumMovie">—</span></div>
+        <div><span class="text-white/60">Date:</span> <span id="sumDate">—</span></div>
+        <div><span class="text-white/60">Theatre:</span> <span id="sumTheatre">—</span></div>
+        <div><span class="text-white/60">Slot:</span> <span id="sumSlot">—</span></div>
+        <div><span class="text-white/60">Seats:</span> <span id="sumSeats">—</span></div>
+        <div class="pt-2 border-t border-white/10 mt-2 text-base"><span class="text-white">Total:</span> <span id="sumTotal">₹0</span></div>
+      </div>
+      <div class="mt-5 flex gap-3">
+        <button id="confirmPay" class="flex-1 bg-cyan-400 text-black font-semibold px-5 py-2.5 rounded-xl hover:brightness-95 active:scale-95 transition">Pay Now</button>
+        <button id="closeModal2" class="flex-1 bg-white/5 border border-white/10 rounded-xl">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center text-white/50">
+    Built with ❤ for your movie booking by TICKET TALES
+  </footer>
+
+  <script>
+    const movies = [
+      // NOTE: Poster paths are assumed. Replace 'posters/...' with your actual image file paths.
+      { title: "Avengers", language: "English", genre: "Action", price: 300, rating: 8.5, likes: 1200000, age: "U/A 13+", description: "Earth's mightiest heroes team up to fight against Loki and his alien army.", cast: ["Robert Downey Jr.", "Chris Evans", "Scarlett Johansson"], reviews: ["Action-packed and entertaining!", "One of the best superhero team-up movies."], trailer: "https://www.youtube.com/watch?v=eOrNdBpGMv8", poster: "../Movie Posters/Avengers.jpg" },
+      { title: "3 Idiots", language: "Hindi", genre: "Comedy", price: 200, rating: 8.4, likes: 1500000, age: "U/A", description: "Three friends navigate college life while challenging the education system.", cast: ["Aamir Khan", "R. Madhavan", "Sharman Joshi"], reviews: ["Inspirational and hilarious at the same time.", "A must-watch for students."], trailer: "https://www.youtube.com/watch?v=xvszmNXdM4w", poster: "3idiots.png" },
+      { title: "KGF", language: "Hindi", genre: "Action", price: 250, rating: 8.2, likes: 1100000, age: "U/A 16+", description: "A young man rises from poverty to become a fearsome gangster in the Kolar Gold Fields.", cast: ["Yash", "Srinidhi Shetty"], reviews: ["High-voltage action and mass entertainment!", "Yash's performance is powerful."], trailer: "https://www.youtube.com/watch?v=GpMoLL_80Jk", poster: "../Movie Posters/KGF.jpg" },
+      { title: "Chhello Divas", language: "Gujarati", genre: "Comedy", price: 150, rating: 7.8, likes: 500000, age: "U/A", description: "A coming-of-age comedy about college students and their fun-filled lives.", cast: ["Malhar Thakar", "Yash Soni", "Mitil Jain"], reviews: ["Relatable and funny Gujarati film.", "Perfect slice of college life comedy."], trailer: "https://www.youtube.com/watch?v=yeU2xb7EJwY", poster: "../Movie Posters/ChelloDivas.jpg" },
+      { title: "Enthiran", language: "Tamil", genre: "Sci-Fi", price: 350, rating: 7.9, likes: 950000, age: "U/A 13+", description: "A scientist creates a humanoid robot that develops emotions and turns rogue.", cast: ["Rajinikanth", "Aishwarya Rai Bachchan"], reviews: ["Rajinikanth at his best with stunning VFX.", "Sci-fi blockbuster of Indian cinema."], trailer: "https://www.youtube.com/watch?v=sY_F6issHsU", poster: "../Movie Posters/Enthiran.png" },
+      { title: "Swades", language: "Hindi", genre: "Drama", price: 180, rating: 8.2, likes: 700000, age: "U/A", description: "An NRI scientist returns to his homeland and rediscovers his roots.", cast: ["Shah Rukh Khan", "Gayatri Joshi"], reviews: ["Heart-touching and socially relevant.", "SRK's most underrated performance."], trailer: "https://www.youtube.com/watch?v=vc7AZNWvs0M", poster: "posters/swades.png" },
+      { title: "Inception", language: "English", genre: "Sci-Fi", price: 120, rating: 8.8, likes: 1600000, age: "U/A 16+", description: "A skilled thief enters people's dreams to steal secrets and plant ideas.", cast: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"], reviews: ["Mind-bending and visually stunning.", "Christopher Nolan’s masterpiece."], trailer: "https://www.youtube.com/watch?v=YoHD9XEInc0", poster: "Movie Posters/inception.png" },
+      { title: "Parasite", language: "Korean", genre: "Thriller", price: 100, rating: 8.6, likes: 900000, age: "U/A 16+", description: "A poor family infiltrates a wealthy household with unexpected consequences.", cast: ["Song Kang-ho", "Choi Woo-shik", "Park So-dam"], reviews: ["Dark, brilliant, and thought-provoking.", "Oscar-winning cinematic gem."], trailer: "https://www.youtube.com/watch?v=isOGD_7hNIY", poster: "Movie Posters/parasite.png" },
+      { title: "The Dark Knight", language: "English", genre: "Action", price: 320, rating: 9.0, likes: 2000000, age: "U/A 16+", description: "Batman faces his greatest challenge in the form of the Joker.", cast: ["Christian Bale", "Heath Ledger", "Aaron Eckhart"], reviews: ["Heath Ledger’s Joker is legendary.", "Best superhero movie ever made."], trailer: "https://www.youtube.com/watch?v=EXeTwQWrcwY", poster: "Movie Posters/darkknight.png" },
+      { title: "Munna Bhai M.B.B.S.", language: "Hindi", genre: "Comedy", price: 220, rating: 8.1, likes: 1300000, age: "U/A", description: "A goon enrolls in medical college to fulfill his father’s dream.", cast: ["Sanjay Dutt", "Arshad Warsi", "Boman Irani"], reviews: ["Funny and emotional in equal measure.", "Circuit and Munna’s friendship is iconic."], trailer: "https://www.youtube.com/watch?v=4v-gf3DxJrs", poster: " Movie Posters/munnabhai.png" },
+      { title: "Baahubali", language: "Telugu", genre: "Action", price: 280, rating: 8.1, likes: 1400000, age: "U/A 13+", description: "A young man learns about his royal heritage and rises to reclaim his kingdom.", cast: ["Prabhas", "Rana Daggubati", "Anushka Shetty"], reviews: ["Visually grand and epic storytelling.", "Indian cinema at global standards."], trailer: "https://www.youtube.com/watch?v=sOEg_YZQsTI", poster: "Movie Posters/baahubali.png" },
+      { title: "Hellaro", language: "Gujarati", genre: "Drama", price: 160, rating: 8.3, likes: 400000, age: "U/A 13+", description: "Set in 1975, women in a village find liberation through Garba dance.", cast: ["Shraddha Dangar", "Jayesh More"], reviews: ["National Award-winning masterpiece.", "Powerful story of women empowerment."], trailer: "https://www.youtube.com/watch?v=bltwI5d3U9E", poster: "posters/hellaro.png" },
+      { title: "Interstellar", language: "English", genre: "Sci-Fi", price: 360, rating: 8.7, likes: 1700000, age: "U/A 13+", description: "Astronauts travel through a wormhole to save humanity from extinction.", cast: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"], reviews: ["Visually stunning and emotionally deep.", "Nolan delivers another sci-fi classic."], trailer: "https://www.youtube.com/watch?v=zSWdZVtXT7E", poster: "posters/interstellar.png" },
+      { title: "Dangal", language: "Hindi", genre: "Drama", price: 200, rating: 8.4, likes: 1500000, age: "U/A", description: "Based on the real story of wrestler Mahavir Singh Phogat training his daughters.", cast: ["Aamir Khan", "Fatima Sana Shaikh", "Sanya Malhotra"], reviews: ["Inspiring and brilliantly acted.", "One of the best sports dramas."], trailer: "https://www.youtube.com/watch?v=x_7YlGv9u1g", poster: "posters/dangal.png" },
+      { title: "Train to Busan", language: "Korean", genre: "Thriller", price: 130, rating: 8.0, likes: 800000, age: "U/A 16+", description: "Passengers struggle to survive on a train during a zombie outbreak.", cast: ["Gong Yoo", "Ma Dong-seok", "Kim Su-an"], reviews: ["Thrilling and emotional zombie movie.", "Best Korean action-horror film."], trailer: "https://www.youtube.com/watch?v=pyWuHv2-Abk", poster: "posters/traintobusan.png" },
+      { title: "Robot 2.0", language: "Tamil", genre: "Sci-Fi", price: 370, rating: 7.2, likes: 750000, age: "U/A 13+", description: "Dr. Vaseegaran and Chitti battle an evil force threatening mobile networks.", cast: ["Rajinikanth", "Akshay Kumar", "Amy Jackson"], reviews: ["Amazing VFX and grand scale.", "Unique concept but a bit lengthy."], trailer: "https://www.youtube.com/watch?v=MVbeoSPqRs4", poster: "posters/robot2.0.png" }
+    ];
+
+    // ======= HELPERS =======
+    const el = id => document.getElementById(id);
+    
+    // Removed trailerToThumb function as it's no longer needed for the poster image.
+    const unique = arr => [...new Set(arr)];
+    
+    // New: Function to generate QR code URL (using Google Charts API)
+    function generateQRCode(data) {
+      const encodedData = encodeURIComponent(data);
+      return `https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=${encodedData}`;
+    }
+
+    // New: Function to generate the ticket HTML
+    function generateTicketHTML() {
+      const m = movies[currentIndex];
+      const date = el('sumDate').textContent;
+      const theatre = el('sumTheatre').textContent;
+      const slot = el('sumSlot').textContent;
+      const seats = el('sumSeats').textContent;
+      const total = el('sumTotal').textContent;
+
+      const qrData = `Movie: ${m.title}, Date: ${date}, Theatre: ${theatre}, Slot: ${slot}, Seats: ${seats}, Total: ${total}`;
+      const qrURL = generateQRCode(qrData);
+
+      return `
+        <div id="ticket" style="font-family: 'Inter', sans-serif; padding:20px; border:2px dashed #333; border-radius:10px; text-align:center; max-width:400px; margin:auto; background:rgb(15 23 42); color:#fff; border-color:rgb(24 24 27); ">
+          <h2 style="margin-bottom:15px; font-weight:700;">🎟️ E-Ticket for ${m.title}</h2>
+          <div style="text-align: left; background:rgb(39 39 42); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <p style="margin: 5px 0;"><b>Date:</b> <span style="float: right; color:#fff;">${date}</span></p>
+            <p style="margin: 5px 0;"><b>Theatre:</b> <span style="float: right; color:#fff;">${theatre}</span></p>
+            <p style="margin: 5px 0;"><b>Slot:</b> <span style="float: right; color:#fff;">${slot}</span></p>
+            <p style="margin: 5px 0;"><b>Seats:</b> <span style="float: right; color:#fff;">${seats}</span></p>
+            <p style="margin: 5px 0; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,0.2);"><b>Total:</b> <span style="float: right; font-weight: bold; color: #38bdf8;">${total}</span></p>
+          </div>
+          <img src="${qrURL}" alt="QR Code" style="margin-top:15px; border-radius: 5px;" />
+          <p style="font-size: 0.8rem; margin-top: 5px; color: #a1a1aa;">Scan this code at the theatre entrance.</p>
+          <div style="margin-top:20px;">
+            <button id="downloadPdfBtn" style="padding:10px 15px; background:#22c55e; color:#000; font-weight: 600; border:none; border-radius:8px; cursor:pointer;" onclick="alert('PDF download is a demo feature. In a production environment, this would generate and download a proper PDF file.');">Download Ticket (PDF)</button>
+          </div>
+        </div>
+      `;
+    }
+
+
+    // ======= INIT SELECTS =======
+    const movieSelect = el('movieSelect');
+    movies.forEach((m, i) => {
+      const opt = document.createElement('option');
+      opt.value = i; opt.textContent = m.title; movieSelect.appendChild(opt);
+    });
+
+    // Filters
+    const filterLanguage = el('filterLanguage');
+    const filterGenre = el('filterGenre');
+    unique(movies.map(m => m.language)).forEach(v => filterLanguage.appendChild(new Option(v, v)));
+    unique(movies.map(m => m.genre)).forEach(v => filterGenre.appendChild(new Option(v, v)));
+
+    // Theatres by language (mock)
+    const THEATRES = {
+      English: ["PVR Central Mall", "INOX City Center", "CineMax Downtown"],
+      Hindi: ["PVR Andheri", "Carnival Cinemas", "INOX Vashi"],
+      Gujarati: ["City Gold Ashram Road", "Cinepolis Ahmedabad"],
+      Tamil: ["AGS Cinemas", "PVR Grand Mall"],
+      Telugu: ["AMB Cinemas", "PVR Hyderabad"],
+      Korean: ["PVR Icon", "INOX Nexus"]
+    };
+
+    // Slots (mock)
+    const SLOTS = ["10:00 AM", "01:30 PM", "05:15 PM", "08:45 PM", "11:30 PM"];
+
+    // ======= RENDER MOVIE DETAILS =======
+    let currentIndex = 0; // default selection
+
+    function renderMovie(i){
+      const m = movies[i];
+      currentIndex = i;
+      
+      // Hide ticket section on movie change
+      el('ticketContainer').classList.add('hidden');
+
+      // Trailer iframe (remains based on YouTube URL)
+      const v = new URL(m.trailer).searchParams.get('v');
+      el('trailerFrame').src = v ? `https://www.youtube.com/embed/${v}` : m.trailer;
+
+      // Headings & badges
+      el('movieTitle').textContent = m.title;
+      el('movieDescription').textContent = m.description;
+      el('ageBadge').textContent = m.age;
+      el('langBadge').textContent = m.language;
+      el('genreBadge').textContent = m.genre;
+      el('ratingValue').textContent = m.rating;
+      el('priceValue').textContent = m.price;
+      el('likesValue').textContent = Intl.NumberFormat('en', {notation:'compact'}).format(m.likes) + ' likes';
+
+      // Poster & quick facts - ***MODIFIED LINE***
+      el('posterImg').src = m.poster; 
+      el('quickRating').textContent = m.rating;
+      el('quickPrice').textContent = `₹${m.price}`;
+      el('quickGenre').textContent = `${m.genre} • ${m.language}`;
+
+      // Cast chips
+      const castRow = el('castRow');
+      castRow.innerHTML = '';
+      m.cast.forEach(name => {
+        const chip = document.createElement('div');
+        chip.className = 'flex items-center gap-2 glass rounded-2xl px-3 py-2 text-sm';
+        const circle = document.createElement('div');
+        circle.className = 'w-8 h-8 rounded-full bg-white/10 grid place-items-center text-xs';
+        circle.textContent = name.split(' ').map(s=>s[0]).slice(0,2).join('');
+        const label = document.createElement('span');
+        label.textContent = name;
+        chip.append(circle, label); castRow.appendChild(chip);
+      });
+
+      // Reviews
+      const reviewsCol = el('reviewsCol');
+      reviewsCol.innerHTML = '';
+      m.reviews.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'glass rounded-2xl p-3 text-sm text-white/80';
+        card.innerHTML = `❝ ${r} ❞`;
+        reviewsCol.appendChild(card);
+      });
+
+      // YouTube link
+      const watchOnYT = el('watchOnYT');
+      watchOnYT.href = m.trailer;
+
+      // Preload booking controls
+      populateTheatres(m.language);
+      renderSlots();
+      generateSeats();
+
+      // Ensure dropdown reflects selection
+      movieSelect.value = i;
+    }
+
+    // ======= BOOKING CONTROLS =======
+    const theatreSelect = el('theatreSelect');
+    const slotRow = el('slotRow');
+
+    function populateTheatres(lang){
+      const list = THEATRES[lang] || ["PVR Cinemas", "INOX"];
+      theatreSelect.innerHTML = '';
+      list.forEach(t => theatreSelect.appendChild(new Option(t, t)));
+    }
+
+    function renderSlots(){
+      slotRow.innerHTML = '';
+      SLOTS.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-sm';
+        btn.textContent = s; btn.dataset.slot = s;
+        btn.addEventListener('click', () => {
+          [...slotRow.children].forEach(c => c.classList.remove('tag'));
+          btn.classList.add('tag');
+          slotRow.dataset.selected = s;
+        });
+        slotRow.appendChild(btn);
+      });
+      // Default select first
+      slotRow.children[0]?.click();
+    }
+
+    // Seats grid
+    const seatsGrid = el('seatsGrid');
+    const selected = new Set();
+
+    function generateSeats(){
+      seatsGrid.innerHTML = '';
+      selected.clear();
+      const rows = 8, cols = 12;
+      const bookedIndices = new Set();
+      // Randomly mark ~20% booked for demo
+      while (bookedIndices.size < Math.floor(rows*cols*0.2)) {
+        bookedIndices.add(Math.floor(Math.random()*rows*cols));
+      }
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          const i = r*cols+c;
+          const div = document.createElement('div');
+          div.className = 'seat available';
+          if(bookedIndices.has(i)) { div.classList.remove('available'); div.classList.add('booked'); }
+          div.textContent = String.fromCharCode(65+r)+(c+1);
+          div.dataset.id = i;
+          div.addEventListener('click', () => {
+            if(div.classList.contains('booked')) return;
+            div.classList.toggle('selected');
+            if(div.classList.contains('selected')) selected.add(i); else selected.delete(i);
+            updateTotals();
+          });
+          seatsGrid.appendChild(div);
+        }
+      }
+      updateTotals();
+    }
+
+    function updateTotals(){
+      el('selectedCount').textContent = selected.size;
+      const price = movies[currentIndex].price * selected.size;
+      el('totalPrice').textContent = `₹${price}`;
+    }
+
+    // ======= EVENTS =======
+    movieSelect.addEventListener('change', e => renderMovie(Number(e.target.value)));
+    el('bookNowTop').addEventListener('click', () => document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'}));
+    el('scrollToBooking').addEventListener('click', () => document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'}));
+
+    // Filters: when applied, auto-jump to first matching movie
+    function applyFilters(){
+      const L = filterLanguage.value; const G = filterGenre.value;
+      const idx = movies.findIndex(m => (!L || m.language===L) && (!G || m.genre===G));
+      if(idx>=0) renderMovie(idx);
+    }
+    filterLanguage.addEventListener('change', applyFilters);
+    filterGenre.addEventListener('change', applyFilters);
+    el('clearFilters').addEventListener('click', () => { filterLanguage.value=''; filterGenre.value=''; renderMovie(0); });
+
+    // Proceed to Payment (Modal)
+    const modal = document.getElementById('modal');
+    function openModal(){
+      const m = movies[currentIndex];
+      el('sumMovie').textContent = m.title;
+      el('sumDate').textContent = el('dateInput').value || new Date().toISOString().slice(0,10);
+      el('sumTheatre').textContent = theatreSelect.value;
+      el('sumSlot').textContent = slotRow.dataset.selected || SLOTS[0];
+      const seats = [...selected].sort((a,b)=>a-b).map(i=>{
+        const cols = 12; const r = Math.floor(i/cols), c = i%cols; return String.fromCharCode(65+r)+(c+1);
+      });
+      el('sumSeats').textContent = seats.join(', ') || '—';
+      el('sumTotal').textContent = `₹${m.price * selected.size}`;
+      modal.classList.remove('hidden');
+    }
+
+    // 1. Custom listener for Proceed button to check for seat selection
+    document.getElementById('proceedBtn').addEventListener('click', () => {
+      if (selected.size === 0) {
+        alert('⚠️ Please select at least one seat before proceeding to payment.');
+        return;
+      }
+      openModal();
+    });
+    
+    document.getElementById('closeModal').addEventListener('click', ()=> modal.classList.add('hidden'));
+    document.getElementById('closeModal2').addEventListener('click', ()=> modal.classList.add('hidden'));
+
+    // 2. & 3. Custom listener for Pay Now to show success and ticket
+    document.getElementById('confirmPay').addEventListener('click', ()=>{
+      modal.classList.add('hidden');
+      
+      // Show success message (alert)
+      alert('🎉 Payment Successful! Your booking is confirmed.');
+
+      // Generate and display the ticket
+      const ticketHTML = generateTicketHTML();
+      el('ticketOutput').innerHTML = ticketHTML;
+      
+      // Show the ticket container and scroll to it
+      el('ticketContainer').classList.remove('hidden');
+      el('ticketContainer').scrollIntoView({behavior:'smooth'});
+    });
+
+
+    // Default render first movie
+    renderMovie(12);
+
+    // Default date today
+    el('dateInput').value = new Date().toISOString().slice(0,10);
+
+  </script>
+</body>
+</html>
