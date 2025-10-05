@@ -491,33 +491,53 @@
     
     // Function to handle the actual PDF generation
     function downloadTicketAsPDF() {
-      // The element to convert is the ticket div, which is centered
       const ticketElement = document.getElementById('ticket'); 
       if (!ticketElement) return;
 
       // Use html2canvas to render the HTML element as a canvas image
       html2canvas(ticketElement, { 
         scale: 2, // Use a higher scale for better resolution
-        backgroundColor: '#0f172a', // Set background to match your ticket's parent
+        backgroundColor: '#0f172a', 
       }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a5'); // Portrait, millimeters, A5 size
         
-        // Calculate image dimensions to fit A5
-        const imgProps = pdf.getImageProperties(imgData);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        const unit = 'mm';
+        // Use A4 size for plenty of space
+        const pdf = new jsPDF('p', unit, 'a4'); 
+        
+        // Use a generous margin (20mm) for X and Y
+        const margin = 50; 
+        
+        // Get the actual PDF page dimensions
+        const pdfPageWidth = pdf.internal.pageSize.getWidth();
+        
+        // Calculate the maximum usable width on the PDF page
+        const maxPdfUsableWidth = pdfPageWidth - 2 * margin; 
+
+        // Calculate the scale factor to fit the canvas width into the usable PDF width
+        const scaleFactor = maxPdfUsableWidth / canvas.width;
+
+        // Apply the scale factor to both width and height for correct aspect ratio
+        const pdfImageWidth = canvas.width * scaleFactor;
+        const pdfImageHeight = canvas.height * scaleFactor;
 
         // Add the image to the PDF
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        // Start drawing at (margin, margin) to push the content away from the edges
+        pdf.addImage(
+            imgData, 
+            'PNG', 
+            margin, // X position (start after margin)
+            margin, // Y position (start after margin)
+            pdfImageWidth, 
+            pdfImageHeight
+        );
         
         // Save the PDF file
         const movieTitle = movies[currentIndex].title.replace(/\s/g, '_');
-        pdf.save(`Ticket_${movieTitle}.pdf`);
+        pdf.save(`TicketTales_${movieTitle}.pdf`);
       });
     }
-
     // Event listener attached after the ticket is generated and displayed
     document.getElementById('ticketOutput').addEventListener('click', (e) => {
         // We listen on the container and check if the clicked element is the button

@@ -1,13 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Poppins';
 }
 body{
     width: 100vw;
     height: 100vh;
-    background-image: url(./pink-7761356_1280.png) ;
+    background-image: url(./bg.png);
     background-size: cover;
     display: flex;
     align-items: center;
@@ -33,13 +34,12 @@ body>section>aside{
     justify-content: center;
 }
 aside>h1{
-    font-size: 40px;
-    font-weight: 200;
+    font-weight: 600;
 }
 body>section>form{
     width: 65%;
     height: 100%;
-    backdrop-filter: blur;
+    background-color: white;
     border-radius: 0px 10px 10px 0px;
     display: flex;
     flex-direction: column;
@@ -52,8 +52,12 @@ form>input{
     height: 40px;
     border: none;
     border-radius: 5px;
-    padding-left: 30px;
-
+    padding-left: 20px;
+    background-color: #C0C0C0;
+    font-weight: 600;
+}
+form>input::placeholder{
+    font-size: 16px;
 }
 button{
     width: 25%;
@@ -72,8 +76,7 @@ button:hover{
     color: #0F172A;
 }
 a{
-    text-decoration: none;
-    color: #0F172A;
+    color: deepskyblue;
     font-size: 20px;
     font-weight: 600;
 }

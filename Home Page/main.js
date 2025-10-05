@@ -55,33 +55,51 @@ l_btn.addEventListener('click',()=>{
   const state = { q: '', language: '', genre: '', maxPrice: '' };
 
   function render(list) {
-    els.list.innerHTML = '';
-    if (!list.length) {
-      els.list.innerHTML = '<p style="padding:16px">No movies found.</p>';
-      return;
-    }
-    list.forEach(m => {
-      const card = document.createElement('div');
-      card.className = 'movie';
-      card.innerHTML = `
-        <img src="${m.img}" alt="${m.title}" class="movie-poster" />
-        <h3>${m.title}</h3>
-        <p>Language: ${m.language}</p>
-        <p>Genre: ${m.genre}</p>
-        <p>Price: ₹${m.price}</p>
-        <p>⭐ Rating: ${m.rating}</p>
-        <p>❤️ Likes: ${m.likes.toLocaleString()}</p>
-      `;
-      card.addEventListener('click', () => {
-      // Save clicked movie details in localStorage
-      localStorage.setItem("selectedMovie", JSON.stringify(m));
-      
-      const pageName = m.title.replace(/\s+/g, '').replace(/[^a-zA-Z0-9\-]/g, '');
-      window.location.href = `../Movie Page/Movies/${pageName}.html`;// change filename if different
-    });
-      els.list.appendChild(card);
-    });
+  els.list.innerHTML = '';
+  if (!list.length) {
+    els.list.innerHTML = '<p style="padding:16px">No movies found.</p>';
+    return;
   }
+
+  // 📌 Helper function to format likes
+  function formatLikes(num) {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + "M";
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + "K";
+    }
+    return num;
+  }
+
+  list.forEach(m => {
+    const formattedLikes = formatLikes(m.likes); // ✅ use formatted value
+
+    const card = document.createElement('div');
+    card.className = 'movie';
+    card.innerHTML = `
+      <div class="poster-container">
+        <img src="${m.img}" alt="${m.title}" class="movie-poster" />
+        <div class="rating-strip">
+          <span class="rating">⭐ ${m.rating}</span>
+          <span class="likes">❤️ ${formattedLikes}</span>
+        </div>
+      </div>
+      <div class="movie-details">
+        <h3>${m.title}</h3>
+        <p>${m.language} • ${m.genre}</p>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      localStorage.setItem("selectedMovie", JSON.stringify(m));
+      const pageName = m.title.replace(/\s+/g, '').replace(/[^a-zA-Z0-9\-]/g, '');
+      window.location.href = `../Movie Page/Movies/${pageName}.html`;
+    });
+
+    els.list.appendChild(card);
+  });
+}
+
   
 
   function applyAllFilters() {
